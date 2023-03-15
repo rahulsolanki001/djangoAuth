@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        .container{
+            display: flex;
+            width: 100vw;
+            flex-direction: row;
+            margin-top: 5%;
+        }
+       .form-container{
+        width: 50%;
+        margin-left: 5%;
+       }
+        .form-container  button:first-child{
+            background-color: transparent;
+            border: 2px solid #322bba;
+            color: #322bba;
+            width: 7vw;
+            padding:0.3em;
+            float: right;
+            margin-right: 2em;
+            margin-top: 1em;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+        .form-container  button:first-child:hover{
+            background-color: #322bba;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .form-container h1,p{
+            color: #322bba;
+            margin-left: 5%;
+            font-weight:600;
+        }
+        .form-container h1{
+            margin-top: 10%;
+        }
+        .form-container form{
+            margin-top: 2em;
+        }
+
+        .input-container{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .input-container input{
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 1em;
+            margin-top: 1.5em;
+            width: 70%;
+            outline: 0ch;
+        }
+
+        .input-container input:active,input:focus{
+            border: 1px solid #322bba;
+        }
+        .name-input input{
+            width: 30%;
+        }
+
+        .name-input input:last-child{
+            margin-left: 5%;
+        }
+
+        form button:last-child{
+            width: 75%;
+            background-color: #322bba;
+            color: #fff;
+            padding: 0.8em;
+            outline: none;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            margin-top: 2em;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+
+        .image-container{
+            width: 40%;
+            position: relative;
+        }
+        .image-container img{
+            width: 95%;
+            height: 80vh;
+            margin-left: 10%;
+        }
+
+        .text-container{
+            width: 90%;
+            position: absolute;
+            z-index: 2;
+            top:60%;
+            left: 5%;
+            height: 45%;
+            background-color: rgba(64, 25, 87,0.8);
+            border-radius: 5px;
+        }
+
+        .text-container h1{
+            text-align: center;
+            color: #fff;
+            font-size: 52px;
+            font-weight: 600;
+            margin-bottom: 0%;
+        }
+        .text-container hr{
+            width: 15%;
+            height: 3px;
+            background-color: #fff;
+        }
+        .text-container p{
+            color: whitesmoke;
+            margin-left: 3em;
+            margin-bottom: 0%;
+            margin-top: 0.5em;
+            font-weight: 400;
+        }
+
+        .text-container p:last-child{
+            text-align: center;
+            margin-left: 0%;
+        }
+
+        .error-container{
+            background-color: rgba(100,0,0,0.4);
+        }
+
+        .error-container p{
+            color: black;
+        }
+
+        @media screen and (max-width:500px) {
+            .container{
+                flex-direction: column;
+            }
+
+            .image-container,.form-container{
+                width: 100%;
+            }
+            .form-container  button:first-child{
+                margin-top: 7em;
+                margin-bottom: 2em;
+                width: 90vw;
+                margin-right: 4em;
+            }
+
+            .form-container p,h1{
+                width: 80%;
+            }
+
+            .image-container img{
+                margin-left: 0%;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container"> 
+        <div class="image-container">
+            <img src="{% static 'users/media/airplane.jpg' %}" alt="airlplane image" />
+            <div class="text-container">
+                <h1>Altitude Air</h1>
+                <hr/>
+                <p>We promise to ensure you that your well being is taken care of while</p>
+                <p>Travelling with us. Boasting top in class fleet inventory and a 5 star </p>
+                <p>approval for our in-flight experience. you know you're getting the</p>
+                <p>best from altitude witout any attitude.</p>
+            </div>
+        </div>
+        <div class="form-container">
+            <a href="{% url 'login' %}"><button>Sign In</button></a>
+            <h1>Explore & Experience</h1>
+            <p>Get onto your most comfortable journey yet.All the way up</p>
+            <form method="POST">
+                {% csrf_token %}
+                {% if register_form.errors %}
+                <div class="error-container">
+                    {% for field in register_form %}
+                       
+                            {% for error in field.errors %}
+                                <p>{{ error|escape }}</p>
+                            {% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                    <div class="input-container">
+                        <div class="name-input">
+                            {{register_form.first_name}}
+                            {{register_form.last_name}}
+                        </div>
+                       
+                        {{register_form.email}}
+                        {{register_form.username}}
+                        {{register_form.password1}}
+                        {{register_form.password2}}
+                    </div>
+                    
+                <button type="submit">Get Started</button>
+            </form>
+        </div>
+    </div>
+   
+    
+</body>
+</html>
